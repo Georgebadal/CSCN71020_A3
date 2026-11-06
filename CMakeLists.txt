@@ -1,19 +1,50 @@
-cmake_minimum_required(VERSION 4.3)
-project(CSCN71020_A3 C)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+cmake_minimum_required(VERSION 3.20)
+
+project(CSCN71020_A3 LANGUAGES C CXX)
+
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-file(GLOB ALL_MAINS "src/*.c")
+# Download Google Test
+include(FetchContent)
 
-foreach (FILE_PATH ${ALL_MAINS})
-    get_filename_component(FILENAME ${FILEPATH} NAME)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
 
-    # EXCLUDE rule: Skip any file that starts with an underscore or is named "template.c"
-    if (FILENAME MATCHES "^" OR FILENAME STREQUAL "template.c")
-        continue() # Skip this iteration
-    endif ()
+FetchContent_MakeAvailable(googletest)
 
-    # Create the executable for valid main files
-    get_filename_component(TARGET_NAME ${FILE_PATH} NAME_WE)
-    add_executable(${TARGET_NAME} ${FILE_PATH})
-endforeach ()
+# Find the C source file
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/functions.c")
+    set(GAME_SOURCE functions.c)
+elseif(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/functions.c")
+    set(GAME_SOURCE src/functions.c)
+else()
+    message(FATAL_ERROR "Cannot find functions.c")
+endif()
+
+# Application code
+add_library(game STATIC ${GAME_SOURCE})
+
+target_include_directories(game PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+# Unit tests
+enable_testing()
+
+add_executable(unit_tests
+    tests/test_functions.cpp
+)
+
+target_link_libraries(unit_tests
+    PRIVATE game GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(unit_tests)

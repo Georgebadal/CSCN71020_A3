@@ -5,6 +5,6 @@ extern "C"{
 
 TEST(RPSTests, BothPlayersRock){
     char result[8] = {0};
-    getWinner("rock", "rock", result);
+    getWinner("Rock", "Rock", result);
     EXPECT_STREQ("Draw", result);
 }
