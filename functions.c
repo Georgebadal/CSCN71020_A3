@@ -19,11 +19,16 @@ void getWinner(const char player1[],
 
         strcpy(result, "Player1");
     }
-    else if (strcmp(player1, "Rock") == 0 &&
-             strcmp(player2, "Paper") == 0) {
+   
+    else if ((strcmp(player1, "Rock") == 0 &&
+          strcmp(player2, "Paper") == 0) ||
 
-        strcpy(result, "Player2");
-    }
+         (strcmp(player1, "Scissors") == 0 &&
+          strcmp(player2, "Rock") == 0)) {
+
+    strcpy(result, "Player2");
+}
+
     else {
         strcpy(result, "Draw");
     }
