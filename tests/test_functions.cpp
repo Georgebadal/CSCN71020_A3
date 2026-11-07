@@ -33,3 +33,12 @@ TEST(RPSTests, ScissorsBeatsPaper) {
 
     EXPECT_STREQ("Player1", result);
 }
+
+
+TEST(RPSTests, Player2PaperBeatsRock) {
+    char result[8] = {0};
+
+    getWinner("Rock", "Paper", result);
+
+    EXPECT_STREQ("Player2", result);
+}
