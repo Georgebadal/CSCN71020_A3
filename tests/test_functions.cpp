@@ -83,3 +83,11 @@ TEST(RPSTests, InvalidPlayer1) {
 
     EXPECT_STREQ("Invalid", result);
 }
+
+TEST(RPSTests, InvalidPlayer2) {
+    char result[8] = {0};
+
+    getWinner("Rock", "Banana", result);
+
+    EXPECT_STREQ("Invalid", result);
+}
