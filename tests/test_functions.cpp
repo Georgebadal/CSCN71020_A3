@@ -75,3 +75,11 @@ TEST(RPSTests, BothPlayersScissors) {
 
     EXPECT_STREQ("Draw", result);
 }
+
+TEST(RPSTests, InvalidPlayer1) {
+    char result[8] = {0};
+
+    getWinner("Banana", "Rock", result);
+
+    EXPECT_STREQ("Invalid", result);
+}
