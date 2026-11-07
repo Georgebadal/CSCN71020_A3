@@ -91,3 +91,19 @@ TEST(RPSTests, InvalidPlayer2) {
 
     EXPECT_STREQ("Invalid", result);
 }
+
+TEST(RPSTests, BothPlayersInvalid) {
+    char result[8] = {0};
+
+    getWinner("Banana", "Apple", result);
+
+    EXPECT_STREQ("Invalid", result);
+}
+
+TEST(RPSTests, SameInvalidWord) {
+    char result[8] = {0};
+
+    getWinner("Banana", "Banana", result);
+
+    EXPECT_STREQ("Invalid", result);
+}
