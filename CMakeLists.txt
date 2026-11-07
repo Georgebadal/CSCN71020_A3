@@ -48,3 +48,8 @@ target_link_libraries(unit_tests
 
 include(GoogleTest)
 gtest_discover_tests(unit_tests)
+
+# Interactive Rock, Paper, Scissors game
+add_executable(RPS_Game main.c)
+
+target_link_libraries(RPS_Game PRIVATE game)
